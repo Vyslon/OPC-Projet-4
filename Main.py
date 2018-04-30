@@ -1,19 +1,41 @@
 # -*- coding: UTF-8 -*-
 import requests
 import json
+from collections import deque
 
-url = "https://fr.openfoodfacts.org/categorie/aliments-et-boissons-a-base-de-vegetaux/3.json"
-r = requests.get(url).json()
+url_categories = "https://fr.openfoodfacts.org/categories.json"
+r_categories = requests.get(url_categories).json()
 
-dictionnary = {"pbfabP" : []
-}
-for j in range(1, 20):
-    dic_name = "pbfabP"
-    for i in range(20):
-        dictionnary[dic_name].append({'nom' : r['products'][i]['product_name_fr']})
-        dictionnary[dic_name].append({'description' : r['products'][i]['categories']})
-        dictionnary[dic_name].append({'revendeur(s)' : r['products'][i]['stores']})
-        dictionnary[dic_name].append({'lien openfoodfacts' : r['products'][i]['url']})
-print("pbfabP : \n{}".format(dictionnary["pbfabP"]))
+categorie_list = []
+
+products = deque()
+
+for a in range(0, 20):
+    categorie_list.append(r_categories['tags'][a]['url'])
+
+print(categorie_list)
+
+for k in range(0, 20):
+    url_cat = categorie_list[k] + "/"
+    for j in range(1, 21):
+        final_url = url_cat + str(j) + ".json"
+        r_products = requests.get(final_url).json()
+        for i in range(0, 20):
+            try:
+                print("url : {}\n".format(final_url))
+                print("{}\n".format(i))
+                products.append({'nom' : r_products['products'][i]['product_name'],\
+                'description' : r_products['products'][i]['categories'],\
+                'revendeur(s)' : r_products['products'][i]['stores'],\
+                'lien openfoodfacts' : r_products['products'][i]['url']})
+            except:
+                pass
+print("Products : \n{}".format(products))
 
 #nouvelle boucle pas encore commit, il faut trouver comment changer de page
+
+#ajouter note nutritionnelle, categories des produits
+
+#changer 20 pour une variable
+
+#deque : fast appends and pop
