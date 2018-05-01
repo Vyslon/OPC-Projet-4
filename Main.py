@@ -27,7 +27,16 @@ for k in range(0, 20):
                 products.append({'nom' : r_products['products'][i]['product_name'],\
                 'description' : r_products['products'][i]['categories'],\
                 'revendeur(s)' : r_products['products'][i]['stores'],\
-                'lien openfoodfacts' : r_products['products'][i]['url']})
+                'lien openfoodfacts' : r_products['products'][i]['url'],\
+                'note nutritionnelle' : r_products['products'][i]['nutrition_grade_fr'],\
+                'cat0' : r_products['products'][i]['categories_hierarchy'][0],\
+                'cat1' : r_products['products'][i]['categories_hierarchy'][1],\
+                'cat2' : r_products['products'][i]['categories_hierarchy'][2],\
+                'cat3' : r_products['products'][i]['categories_hierarchy'][3],\
+                'cat4' : r_products['products'][i]['categories_hierarchy'][4],\
+                'cat5' : r_products['products'][i]['categories_hierarchy'][5],\
+                'cat6' : r_products['products'][i]['categories_hierarchy'][6],\
+                })
             except:
                 pass
 print("Products : \n{}".format(products))
