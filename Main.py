@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import requests
 import json
-import sqlalchemy
+import pymysql
 from collections import deque
 from functions import *
 
