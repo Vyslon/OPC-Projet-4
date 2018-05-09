@@ -58,4 +58,4 @@ SELECT Products.name AS Nom_Produit, Products.nutrition_grade AS Note_Nutritionn
 FROM PC_C_association_table
 INNER JOIN Products_categories ON PC_C_association_table.cat_id = Products_categories.id
 INNER JOIN Products ON PC_C_association_table.product_id = Products.id
-ORDER BY Products.nutrition_grade
+ORDER BY Products.nutrition_grade;
