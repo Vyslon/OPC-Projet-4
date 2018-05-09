@@ -11,6 +11,11 @@ categorie_list_url = []
 categorie_list_name = []
 products = deque()
 nb_categories_produits = 20
+db_connection = pymysql.connect(host='localhost',
+                                user='vyn',
+                                password='123',
+                                charset='utf8mb4',
+                                cursorclass=pymysql.cursors.DictCursor)
 
 
 for a in range(0, nb_categories_produits):
