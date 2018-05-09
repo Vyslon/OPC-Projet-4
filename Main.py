@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
 import requests
 import json
+import sqlalchemy
 from collections import deque
 from functions import *
 
 url_categories = "https://fr.openfoodfacts.org/categories.json"
 r_categories = requests.get(url_categories).json()
-categorie_list = []
+categorie_list_url = []
+categorie_list_name = []
 products = deque()
 nb_categories_produits = 20
 
@@ -16,8 +18,6 @@ for a in range(0, nb_categories_produits):
 
 for a in range(0, nb_categories_produits):
     categorie_list_name.append(r_categories['tags'][a]['name'])
-
-print(categorie_list)
 
 for k in range(0, nb_categories_produits):
     url_cat = categorie_list_url[k] + "/"
@@ -35,15 +35,8 @@ for k in range(0, nb_categories_produits):
                 'note nutritionnelle' : r_products['products'][i]['nutrition_grade_fr'],\
                 'cat0' : r_products['products'][i]['categories_hierarchy'][0],\
                 'cat1' : r_products['products'][i]['categories_hierarchy'][1],\
-                'cat2' : r_products['products'][i]['categories_hierarchy'][2],\
-                'cat3' : r_products['products'][i]['categories_hierarchy'][3],\
-                'cat4' : r_products['products'][i]['categories_hierarchy'][4],\
-                'cat5' : r_products['products'][i]['categories_hierarchy'][5],\
-                'cat6' : r_products['products'][i]['categories_hierarchy'][6],\
+                'cat2' : r_products['products'][i]['categories_hierarchy'][2],
                 })
+                print(r_products['products'][i]['stores'])
             except:
                 pass
-print("Products_categories : \n{}".format(categorie_list_name))
-
-
-#deque : fast appends and pop
