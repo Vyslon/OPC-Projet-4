@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import requests
 import json
-import pymysql
+import pymysql.cursors
 from collections import deque
 from functions import *
 
@@ -18,17 +18,19 @@ db_connection = pymysql.connect(host='localhost',
                                 cursorclass=pymysql.cursors.DictCursor)
 
 try:
-    with db_connection.cursor() as cursor:
-        sql = "SOURCE `database.SQL`"
-        cursor.execute(sql)
+    with db_connection.cursor() as cur:
+        sql = "SOURCE /home/thomas/Openclassrooms/Projet_5/OPC-Projet-4/database.SQL"
+        cur.execute(sql)
 
     db_connection.commit()
 
-    with db_connection.cursor() as cursor:
+    with db_connection.cursor() as cur:
         sql = "SHOW TABLES;"
-        cursor.execute(sql)
-        result = cursor.fetchnone()
+        cur.execute(sql)
+        result = cur.fetchnone()
         print(result)
+except:
+    pass
 finally:
     db_connection.close()
 
