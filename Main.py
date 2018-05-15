@@ -13,6 +13,7 @@ products = deque()
 nb_categories_produits = 20
 
 db_connection = records.Database('mysql+pymysql://root:123@localhost')
+db_connection.query("SET NAMES utf8;")
 db_connection.query("DROP DATABASE IF EXISTS PROJET5;")
 db_connection.query("CREATE DATABASE PROJET5;")
 db_connection.query("USE PROJET5;")
@@ -30,13 +31,16 @@ db_connection.query("ALTER TABLE PC_C_association_table ADD CONSTRAINT fk_cat_id
 db_connection.query("ALTER TABLE PC_C_association_table ADD CONSTRAINT fk_product_id FOREIGN KEY PC_C_association_table(cat_id) REFERENCES Products_categories(id);")
 db_connection.query("CREATE UNIQUE INDEX unique_name ON Products_categories(name);")
 db_connection.query("DROP TABLE IF EXISTS VM_Final;")
-db_connection.query("CREATE TABLE VM_Final ENGINE = InnoDB SELECT Products.name AS Nom_Produit, Products.nutrition_grade AS Note_Nutritionnelle, Products.description AS Description, Products.stores AS Revendeurs, Products_categories.name AS Nom_Catégorie FROM PC_C_association_table INNER JOIN Products_categories ON PC_C_association_table.cat_id = Products_categories.id INNER JOIN Products ON PC_C_association_table.product_id = Products.id ORDER BY Products.nutrition_grade;")
+db_connection.query("CREATE TABLE VM_Final ENGINE = InnoDB SELECT Products.name AS Nom_Produit, Products.nutrition_grade AS Note_Nutritionnelle, Products.description AS Description, Products.stores AS Revendeurs, Products_categories.name AS Nom_Categorie FROM PC_C_association_table INNER JOIN Products_categories ON PC_C_association_table.cat_id = Products_categories.id INNER JOIN Products ON PC_C_association_table.product_id = Products.id ORDER BY Products.nutrition_grade;")
 
 for a in range(0, nb_categories_produits):
     categorie_list_url.append(r_categories['tags'][a]['url'])
 
 for a in range(0, nb_categories_produits):
     categorie_list_name.append(r_categories['tags'][a]['name'])
+
+for nb in range(0, nb_categories_produits):
+    db_connection.query("INSERT INTO Products_categories VALUES ({});".format(categorie_list_name[nb]))
 
 for k in range(0, nb_categories_produits):
     url_cat = categorie_list_url[k] + "/"
