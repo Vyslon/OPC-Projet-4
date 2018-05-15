@@ -1,9 +1,7 @@
-DROP DATABASE IF EXISTS PROJ5;
-CREATE DATABASE PROJ5;
+DROP DATABASE IF EXISTS PROJETN5;
+CREATE DATABASE PROJETN5;
 
-GRANT ALL PRIVILEGES ON mydb.* TO 'vyn'@'localhost' WITH GRANT OPTION;
-
-USE PROJ5;
+USE PROJETN5;
 
 DROP TABLE IF EXISTS Products;
 CREATE TABLE Products (
@@ -26,12 +24,6 @@ CREATE TABLE PC_C_association_table (
     PRIMARY KEY (product_id, cat_id)
 )ENGINE = InnoDB;
 
-ALTER TABLE PC_C_association_table
-ADD CONSTRAINT fk_cat_id FOREIGN KEY PC_C_association_table(product_id) REFERENCES Products(id);
-
-ALTER TABLE PC_C_association_table
-ADD CONSTRAINT fk_product_id FOREIGN KEY PC_C_association_table(cat_id) REFERENCES Products_categories(id);
-
 CREATE INDEX ind_nutrition_grade
 ON Products(nutrition_grade);
 
@@ -47,6 +39,12 @@ CREATE TABLE Products_categories (
   name VARCHAR(200) NOT NULL,
   PRIMARY KEY(id)
 )ENGINE = InnoDB;
+
+ALTER TABLE PC_C_association_table
+ADD CONSTRAINT fk_cat_id FOREIGN KEY PC_C_association_table(product_id) REFERENCES Products(id);
+
+ALTER TABLE PC_C_association_table
+ADD CONSTRAINT fk_product_id FOREIGN KEY PC_C_association_table(cat_id) REFERENCES Products_categories(id);
 
 CREATE UNIQUE INDEX unique_name
 ON Products_categories(name);
