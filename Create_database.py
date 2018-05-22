@@ -55,8 +55,6 @@ for k in range(0, nb_categories_produits):
         r_products = requests.get(final_url).json()
         for i in range(0, nb_categories_produits):
             try:
-                #print("url : {}\n".format(final_url))
-                #print("{}\n".format(i))
                 products.append({'nom' : r_products['products'][i]['product_name'],\
                 'description' : r_products['products'][i]['categories'],\
                 'revendeur(s)' : r_products['products'][i]['stores'],\
@@ -66,6 +64,5 @@ for k in range(0, nb_categories_produits):
                 'cat1' : r_products['products'][i]['categories_hierarchy'][1],\
                 'cat2' : r_products['products'][i]['categories_hierarchy'][2],
                 })
-                #print(r_products['products'][i]['stores'])
             except:
                 pass
