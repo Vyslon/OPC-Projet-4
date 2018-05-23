@@ -11,7 +11,7 @@ categorie_list_url = []
 categorie_list_name = []
 categorie_list_id = []
 products = deque()
-nb_categories_produits = 20
+nb_categories_produits = 5
 
 db_connection = records.Database('mysql+pymysql://root:123@localhost')
 db_connection.query("SET NAMES 'utf8';")
@@ -33,7 +33,7 @@ db_connection.query("ALTER TABLE PC_C_association_table ADD CONSTRAINT fk_cat_id
 db_connection.query("ALTER TABLE PC_C_association_table ADD CONSTRAINT fk_product_id FOREIGN KEY PC_C_association_table(cat_id) REFERENCES Products_categories(id);")
 db_connection.query("CREATE UNIQUE INDEX unique_name ON Products_categories(name);")
 db_connection.query("DROP TABLE IF EXISTS VM_Final;")
-db_connection.query("CREATE TABLE VM_Final ENGINE = InnoDB SELECT Products.name AS Nom_Produit, Products.nutrition_grade AS Note_Nutritionnelle, Products.description AS Description, Products.stores AS Revendeurs, Products_categories.name AS Nom_Categorie FROM PC_C_association_table url_openfoodfact AS URL_off INNER JOIN Products_categories ON PC_C_association_table.cat_id = Products_categories.id INNER JOIN Products ON PC_C_association_table.product_id = Products.id ORDER BY Products.nutrition_grade;")
+db_connection.query("CREATE TABLE VM_Final ENGINE = InnoDB SELECT Products.name AS Nom_Produit, Products.nutrition_grade AS Note_Nutritionnelle, Products.description AS Description, Products.stores AS Revendeurs, Products_categories.name AS Nom_Categorie, url_openfoodfact AS URL_off  FROM PC_C_association_table INNER JOIN Products_categories ON PC_C_association_table.cat_id = Products_categories.id INNER JOIN Products ON PC_C_association_table.product_id = Products.id ORDER BY Products.nutrition_grade;")
 db_connection.query("ALTER TABLE Products CONVERT TO CHARACTER SET utf8;")
 db_connection.query("ALTER TABLE PC_C_association_table CONVERT TO CHARACTER SET utf8;")
 db_connection.query("ALTER TABLE Products_categories CONVERT TO CHARACTER SET utf8;")
