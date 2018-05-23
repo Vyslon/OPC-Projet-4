@@ -11,7 +11,7 @@ categorie_list_url = []
 categorie_list_name = []
 categorie_list_id = []
 products = deque()
-nb_categories_produits = 5
+nb_categories_produits = 20
 
 db_connection = records.Database('mysql+pymysql://root:123@localhost')
 db_connection.query("SET NAMES 'utf8';")
