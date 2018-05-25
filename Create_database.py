@@ -20,8 +20,7 @@ db_connection.query("DROP DATABASE IF EXISTS PROJET5;")
 db_connection.query("CREATE DATABASE PROJET5 CHARACTER SET utf8 COLLATE utf8_general_ci;;")
 db_connection.query("USE PROJET5;")
 db_connection.query("DROP TABLE IF EXISTS Products;")
-db_connection.query("CREATE TABLE Products (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(100) NOT NULL, description VARCHAR(200), stores VARCHAR(100), nutrition_grade CHAR(1) NOT NULL, substitued_by_product_id INT UNSIGNED, url_openfoodfact VARCHAR(100) NOT NULL, PRIMARY KEY(id))")
-db_connection.query("ALTER TABLE Products ADD CONSTRAINT fk_sub_prod_id FOREIGN KEY Products(substitued_by_product_id) REFERENCES Products(id);")
+db_connection.query("CREATE TABLE Products (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(100) NOT NULL, description VARCHAR(200), stores VARCHAR(100), nutrition_grade CHAR(1) NOT NULL, substitute BOOLEAN, url_openfoodfact VARCHAR(100) NOT NULL, PRIMARY KEY(id))")
 db_connection.query("DROP TABLE IF EXISTS PC_C_association_table;")
 db_connection.query("CREATE TABLE PC_C_association_table (product_id INT UNSIGNED NOT NULL, cat_id INT UNSIGNED NOT NULL, PRIMARY KEY (product_id, cat_id))ENGINE = InnoDB;")
 db_connection.query("CREATE INDEX ind_nutrition_grade ON Products(nutrition_grade);")
@@ -46,7 +45,9 @@ for a in range(0, nb_categories_produits):
     categorie_list_id.append(r_categories['tags'][a]['id'])
 
 for nb in range(0, nb_categories_produits):
-    db_connection.query("INSERT INTO Products_categories (name) VALUES (\"{}\");".format(categorie_list_name[nb]))
+    cdc = "INSERT INTO Products_categories (name) VALUES (\"{}\");".format(categorie_list_name[nb])
+    print(cdc)
+    db_connection.query(cdc)
 
 for k in range(0, nb_categories_produits):
     url_cat = categorie_list_url[k] + "/"
