@@ -36,7 +36,7 @@ while (restart == "0"):
     elif nb_result == "2":
         db_connection = records.Database('mysql+pymysql://root:123@localhost/?charset=utf8mb4')
         db_connection.query("USE PROJET5;")
-        substitutes = db_connection.query("SELECT name, url_openfoodfact FROM Products WHERE substitute != NULL;")
+        substitutes = db_connection.query("SELECT name, url_openfoodfact FROM Products WHERE substitute = true;")
         print("Liste des produits substituants : \n===========================\n\n")
         for x in substitutes:
             print("Nom produit substituant : {}\nURL Open Food Facts produit substituant : {}\n\n".format(x.name, x.url_openfoodfact))
