@@ -5,6 +5,9 @@
  - [ ] To begin, 2 options are available to you, you can start the creation of the database of the application by launching  "**Create_database.py**" script or you can make it by launching "**Substitute.py**", by entering `3` in the terminal
  
 
+
+
+
 > Create_database.py has to be already executed to use the application properly. (to find substitutes)
 >
 >Create_database.py is sending HTTP requests to [Open Food Facts](https://fr.openfoodfacts.org) which is an open source  database of food products.
