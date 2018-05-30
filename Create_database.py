@@ -9,7 +9,7 @@ url_categories = "https://fr.openfoodfacts.org/categories.json"
 r_categories = requests.get(url_categories).json()
 categorie_list_url = []
 categorie_list_name = []
-nb_categories_produits = 20
+nb_of_categories = 20
 p_id = 0
 
 db_connection = records.Database('mysql+pymysql://root:123@localhost/?charset=utf8mb4')
@@ -36,21 +36,21 @@ db_connection.query("ALTER TABLE PC_C_association_table CONVERT TO CHARACTER SET
 db_connection.query("ALTER TABLE Products_categories CONVERT TO CHARACTER SET UTF8MB4;")
 
 
-for a in range(0, nb_categories_produits):
+for a in range(0, nb_of_categories):
     categorie_list_url.append(r_categories['tags'][a]['url'])
     categorie_list_name.append(r_categories['tags'][a]['id'])
     print(r_categories['tags'][a]['id'])
 
-for nb in range(0, nb_categories_produits):
+for nb in range(0, nb_of_categories):
     cdc = "INSERT INTO Products_categories (name) VALUES (\"{}\");".format(categorie_list_name[nb])
     db_connection.query(cdc)
 
-for k in range(0, nb_categories_produits):
+for k in range(0, nb_of_categories):
     url_cat = categorie_list_url[k] + "/"
     for j in range(1, 21):
         final_url = url_cat + str(j) + ".json"
         r_products = requests.get(final_url).json()
-        for i in range(0, nb_categories_produits):
+        for i in range(0, nb_of_categories):
             try:
                 prod_name = r_products['products'][i]['product_name']
                 prod_description = r_products['products'][i]['categories']
