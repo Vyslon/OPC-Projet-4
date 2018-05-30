@@ -21,7 +21,7 @@
 
  - [ ] You can find all your substituting food by entering 2 in the terminal, after launching Substitute.py
 
-#[FR] Healthier
+# [FR] Healthier
 
 **Healthier est une application qui vous permettra d'assainir vos habitudes alimentaires en trouvant des substituts à vos produits préférés !**
 
