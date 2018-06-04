@@ -69,9 +69,8 @@ for a in range(0, nb_of_categories):
     print(r_categories['tags'][a]['id'])
 
 for nb in range(0, nb_of_categories):
-    cdc = "INSERT INTO Products_categories (name) VALUES (\"{}\")"
-    ";".format(categorie_list_name[nb])
-    db_connection.query(cdc)
+    cdc = "INSERT INTO Products_categories (name) VALUES (\"{}\");"
+    db_connection.query(cdc.format(categorie_list_name[nb]))
 
 for k in range(0, nb_of_categories):
     url_cat = categorie_list_url[k] + "/"
@@ -80,18 +79,18 @@ for k in range(0, nb_of_categories):
         r_products = requests.get(final_url).json()
         for i in range(0, nb_of_categories):
             try:
+                insertion_prod = 0
                 prod_name = r_products['products'][i]['product_name']
                 prod_description = r_products['products'][i]['categories']
                 prod_stores = r_products['products'][i]['stores']
-                prod_nutrinion_grade = 
-                r_products['products']\
-                [i]['nutrition_grade_fr']
+                prod_nutrinion_grade = \
+                r_products['products'][i]['nutrition_grades_tags'][0]
                 prod_url_openfoodfact = r_products['products'][i]['url']
-                prod_categorie_1 = 
+                prod_categorie_1 = \
                 r_products['products']\
                 [i]['categories_hierarchy'][0]
                 prod_categorie_2 = \
-                r_products['products']\ 
+                r_products['products']\
                 [i]['categories_hierarchy'][1]
                 prod_categorie_3 = \
                 r_products['products']\
@@ -102,27 +101,31 @@ for k in range(0, nb_of_categories):
                  categorie_list_name)
                 pc_id_3 = cat_into_cat_id(prod_categorie_3,
                  categorie_list_name)
-
-                p_id = p_id + 1
-                insertion_prod =
-                "INSERT INTO Products (name, description,"
-                " stores, nutrition_grade, url_openfoodfact) VALUES (\"{}\","
-                " \"{}\", \"{}\", \"{}\", \"{}\")"
-                ";".format(prod_name, prod_description, prod_stores,
-                 prod_nutrinion_grade, prod_url_openfoodfact)
-                insertion_association_1 =
-                "INSERT INTO PC_C_association_table"
-                " (product_id, cat_id) VALUES ({}, {});".format(p_id, pc_id_1)
-                insertion_association_2 =
-                "INSERT INTO PC_C_association_table"
-                " (product_id, cat_id) VALUES ({}, {});".format(p_id, pc_id_2)
-                insertion_association_3 =
-                "INSERT INTO PC_C_association_table"
-                " (product_id, cat_id) VALUES ({}, {});".format(p_id, pc_id_3)
-                db_connection.query(insertion_prod)
-                db_connection.query(insertion_association_1)
-                db_connection.query(insertion_association_2)
-                db_connection.query(insertion_association_3)
+                if (len(prod_name) <= 100 and len(prod_description) <= 200 and
+                    len(prod_stores) <= 100 and len(prod_nutrinion_grade) == 1 and
+                    len(prod_url_openfoodfact) <= 100 and pc_id_1 != 100 and
+                    pc_id_2 != 100 and pc_id_3 != 100):
+                    insertion_prod = db_connection.query("INSERT INTO Products (name, description, stores, nutrition_grade, url_openfoodfact) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\");".format(prod_name, prod_description, prod_stores, prod_nutrinion_grade, prod_url_openfoodfact))
+            except:
+                pass
+            try:
+                 if insertion_prod != 0:
+                    p_id = p_id + 1
+                    insertion_association_1 = \
+                    "INSERT INTO PC_C_association_table" \
+                    " (product_id, cat_id) VALUES ({}, {})" \
+                    ";"
+                    insertion_association_2 = \
+                    "INSERT INTO PC_C_association_table" \
+                    " (product_id, cat_id) VALUES ({}, {})" \
+                    ";"
+                    insertion_association_3 = \
+                    "INSERT INTO PC_C_association_table" \
+                    " (product_id, cat_id) VALUES ({}, {})" \
+                    ";"
+                    db_connection.query(insertion_association_1.format(p_id, pc_id_1))
+                    db_connection.query(insertion_association_2.format(p_id, pc_id_2))
+                    db_connection.query(insertion_association_3.format(p_id, pc_id_3))
             except:
                 pass
 
