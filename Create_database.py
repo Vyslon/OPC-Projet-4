@@ -35,15 +35,6 @@ db_connection.query(
     "CREATE TABLE PC_C_association_table (product_id INT "
     "UNSIGNED, cat_id INT UNSIGNED, PRIMARY KEY (product_id, cat_id))"
     "ENGINE = InnoDB;")
-db_connection.query(
-    "CREATE INDEX ind_nutrition_grade ON "
-    "Products(nutrition_grade);")
-db_connection.query(
-    "CREATE INDEX ind_product_id ON "
-    "PC_C_association_table(product_id);")
-db_connection.query(
-    "CREATE INDEX ind_cat_id ON "
-    "PC_C_association_table(cat_id);")
 db_connection.query("DROP TABLE IF EXISTS Products_categories;")
 db_connection.query(
     "CREATE TABLE Products_categories (id INT UNSIGNED "
@@ -140,3 +131,14 @@ db_connection.query(
     "PC_C_association_table.product_id = Products.id ORDER BY "
     "Products.nutrition_grade;")
 db_connection.query("ALTER TABLE VM_Final CONVERT TO CHARACTER SET UTF8MB4;")
+
+db_connection.query(
+    "CREATE INDEX ind_nutrition_grade ON "
+    "Products(nutrition_grade);")
+db_connection.query(
+    "CREATE INDEX ind_product_id ON "
+    "PC_C_association_table(product_id);")
+db_connection.query(
+    "CREATE INDEX ind_cat_id ON "
+    "PC_C_association_table(cat_id);")
+
