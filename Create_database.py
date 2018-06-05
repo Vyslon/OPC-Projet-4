@@ -53,13 +53,13 @@ db_connection.query(
     "ALTER TABLE Products_categories CONVERT TO CHARACTER SET "
     "UTF8MB4;")
 db_connection.query(
-"ALTER TABLE PC_C_association_table "
-"ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id)"
-" REFERENCES Products(id);")
+    "ALTER TABLE PC_C_association_table "
+    "ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id)"
+    " REFERENCES Products(id);")
 db_connection.query(
-"ALTER TABLE PC_C_association_table "
-"ADD CONSTRAINT fk_cat_id FOREIGN KEY (cat_id)"
-" REFERENCES Products_categories(id);")
+    "ALTER TABLE PC_C_association_table "
+    "ADD CONSTRAINT fk_cat_id FOREIGN KEY (cat_id)"
+    " REFERENCES Products_categories(id);")
 
 
 for a in range(0, nb_of_categories):
@@ -132,7 +132,7 @@ for k in range(0, nb_of_categories):
                         " (product_id, cat_id) VALUES ({}, {})" \
                         ";"
                     print(insertion_association_1.format(p_id,
-                                        pc_id_1))
+                                                         pc_id_1))
                     db_connection.query(insertion_association_1.format(p_id,
                                         pc_id_1))
                     db_connection.query(insertion_association_2.format(p_id,
