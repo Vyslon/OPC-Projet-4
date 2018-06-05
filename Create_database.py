@@ -75,48 +75,58 @@ for k in range(0, nb_of_categories):
                 prod_description = r_products['products'][i]['categories']
                 prod_stores = r_products['products'][i]['stores']
                 prod_nutrinion_grade = \
-                r_products['products'][i]['nutrition_grades_tags'][0]
+                    r_products['products'][i]['nutrition_grades_tags'][0]
                 prod_url_openfoodfact = r_products['products'][i]['url']
                 prod_categorie_1 = \
-                r_products['products']\
-                [i]['categories_hierarchy'][0]
+                    r_products['products'][i]['categories_hierarchy'][0]
                 prod_categorie_2 = \
-                r_products['products']\
-                [i]['categories_hierarchy'][1]
+                    r_products['products'][i]['categories_hierarchy'][1]
                 prod_categorie_3 = \
-                r_products['products']\
-                [i]['categories_hierarchy'][2]
+                    r_products['products'][i]['categories_hierarchy'][2]
                 pc_id_1 = cat_into_cat_id(prod_categorie_1,
-                 categorie_list_name)
+                                          categorie_list_name)
                 pc_id_2 = cat_into_cat_id(prod_categorie_2,
-                 categorie_list_name)
+                                          categorie_list_name)
                 pc_id_3 = cat_into_cat_id(prod_categorie_3,
-                 categorie_list_name)
+                                          categorie_list_name)
                 if (len(prod_name) <= 100 and len(prod_description) <= 200 and
-                    len(prod_stores) <= 100 and len(prod_nutrinion_grade) == 1 and
-                    len(prod_url_openfoodfact) <= 100 and pc_id_1 != 100 and
-                    pc_id_2 != 100 and pc_id_3 != 100):
-                    insertion_prod = db_connection.query("INSERT INTO Products (name, description, stores, nutrition_grade, url_openfoodfact) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\");".format(prod_name, prod_description, prod_stores, prod_nutrinion_grade, prod_url_openfoodfact))
+                        len(prod_stores) <= 100 and
+                        len(prod_nutrinion_grade) == 1 and
+                        len(prod_url_openfoodfact) <= 100 and
+                        pc_id_1 != 100 and
+                        pc_id_2 != 100 and pc_id_3 != 100):
+                    insert_prod_str = \
+                        "INSERT INTO Products (name, " \
+                        "description, stores, nutrition_grade, " \
+                        "url_openfoodfact)" \
+                        " VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\");"
+                    insertion_prod = db_connection.query(
+                        insert_prod_str.format(
+                            prod_name, prod_description, prod_stores,
+                            prod_nutrinion_grade, prod_url_openfoodfact))
             except:
                 pass
             try:
-                 if insertion_prod != 0:
+                if insertion_prod != 0:
                     p_id = p_id + 1
                     insertion_association_1 = \
-                    "INSERT INTO PC_C_association_table" \
-                    " (product_id, cat_id) VALUES ({}, {})" \
-                    ";"
+                        "INSERT INTO PC_C_association_table" \
+                        " (product_id, cat_id) VALUES ({}, {})" \
+                        ";"
                     insertion_association_2 = \
-                    "INSERT INTO PC_C_association_table" \
-                    " (product_id, cat_id) VALUES ({}, {})" \
-                    ";"
+                        "INSERT INTO PC_C_association_table" \
+                        " (product_id, cat_id) VALUES ({}, {})" \
+                        ";"
                     insertion_association_3 = \
-                    "INSERT INTO PC_C_association_table" \
-                    " (product_id, cat_id) VALUES ({}, {})" \
-                    ";"
-                    db_connection.query(insertion_association_1.format(p_id, pc_id_1))
-                    db_connection.query(insertion_association_2.format(p_id, pc_id_2))
-                    db_connection.query(insertion_association_3.format(p_id, pc_id_3))
+                        "INSERT INTO PC_C_association_table" \
+                        " (product_id, cat_id) VALUES ({}, {})" \
+                        ";"
+                    db_connection.query(insertion_association_1.format(p_id,
+                                        pc_id_1))
+                    db_connection.query(insertion_association_2.format(p_id,
+                                        pc_id_2))
+                    db_connection.query(insertion_association_3.format(p_id,
+                                        pc_id_3))
             except:
                 pass
 
@@ -141,4 +151,3 @@ db_connection.query(
 db_connection.query(
     "CREATE INDEX ind_cat_id ON "
     "PC_C_association_table(cat_id);")
-
