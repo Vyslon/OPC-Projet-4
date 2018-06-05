@@ -52,6 +52,14 @@ db_connection.query(
 db_connection.query(
     "ALTER TABLE Products_categories CONVERT TO CHARACTER SET "
     "UTF8MB4;")
+db_connection.query(
+"ALTER TABLE PC_C_association_table "
+"ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id)"
+" REFERENCES Products(id);")
+db_connection.query(
+"ALTER TABLE PC_C_association_table "
+"ADD CONSTRAINT fk_cat_id FOREIGN KEY (cat_id)"
+" REFERENCES Products_categories(id);")
 
 
 for a in range(0, nb_of_categories):
@@ -104,11 +112,13 @@ for k in range(0, nb_of_categories):
                         insert_prod_str.format(
                             prod_name, prod_description, prod_stores,
                             prod_nutrinion_grade, prod_url_openfoodfact))
-                    p_id = p_id + 1
             except:
                 pass
             try:
                 if insertion_prod != 0:
+                    p_id = db_connection.query("SELECT MAX(id) FROM Products;")
+                    p_id = p_id.first()
+                    p_id = p_id["MAX(id)"]
                     insertion_association_1 = \
                         "INSERT INTO PC_C_association_table" \
                         " (product_id, cat_id) VALUES ({}, {})" \
@@ -121,6 +131,8 @@ for k in range(0, nb_of_categories):
                         "INSERT INTO PC_C_association_table" \
                         " (product_id, cat_id) VALUES ({}, {})" \
                         ";"
+                    print(insertion_association_1.format(p_id,
+                                        pc_id_1))
                     db_connection.query(insertion_association_1.format(p_id,
                                         pc_id_1))
                     db_connection.query(insertion_association_2.format(p_id,
