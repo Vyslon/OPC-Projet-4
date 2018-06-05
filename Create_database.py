@@ -104,11 +104,11 @@ for k in range(0, nb_of_categories):
                         insert_prod_str.format(
                             prod_name, prod_description, prod_stores,
                             prod_nutrinion_grade, prod_url_openfoodfact))
+                    p_id = p_id + 1
             except:
                 pass
             try:
                 if insertion_prod != 0:
-                    p_id = p_id + 1
                     insertion_association_1 = \
                         "INSERT INTO PC_C_association_table" \
                         " (product_id, cat_id) VALUES ({}, {})" \
