@@ -9,7 +9,7 @@ restart = "0"
 
 while (restart == "0"):
     nb_result = input("1 - Souhaitez-vous remplacer un aliment ?\n2 - "
-                      "Retrouver mes aliments substitués.\n3 - Créer (1ère"
+                      "Retrouver mes aliments substitués.\n3 - Créer (1ère "
                       "utilisation) ou recréer (mise à jour) la base de "
                       "données\n\n")
 
